@@ -328,6 +328,5 @@ def csv_file(vTFinal):
         , received_quantity
         , to_be_dispatched
     FROM {vTFinal}
-    --WHERE particion
     """.format(vTFinal=vTFinal)
     return qry
