@@ -297,36 +297,3 @@ GROUP BY wi.object_id,
     """.format(vDiaIni=vDiaIni, vDiaFin=vDiaFin, vHoraIni=vHoraIni,vHoraFin=vHoraFin)
     return qry
 
-## N02
-def csv_file(vTFinal):
-    qry="""
-    SELECT 
-        work_item_id
-        , created_when
-        , type_
-        , mo_type
-        , movement_order_id
-        , mo_status
-        , customer_id
-        , customer_name
-        , contextid
-        , so_type
-        , equipment_condition
-        , preactivation_template_id
-        , preactivation_template_name
-        , equipment_name
-        , equipment_id
-        , article
-        , move_order_line_id
-        , location_from_name
-        , location_from_id
-        , location_to_name
-        , location_to_id
-        , approved_quantity
-        , reserved_quantity
-        , dispatched_quantity
-        , received_quantity
-        , to_be_dispatched
-    FROM {vTFinal}
-    """.format(vTFinal=vTFinal)
-    return qry

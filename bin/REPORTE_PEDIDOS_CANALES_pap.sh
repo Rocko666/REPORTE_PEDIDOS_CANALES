@@ -16,62 +16,62 @@ set -e
 ##############
 # VARIABLES #
 ##############
-ENTIDAD=D_RPRTPDDSCNLS0010
+ENTIDAD=RPRTPDDSCNLS0010
 
 ###########################################################################################################################################################
 echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: Lectura de parametros iniciales"
 ###########################################################################################################################################################
-VAL_KINIT=`mysql -N  <<<"select valor from params_des where ENTIDAD = 'D_SPARK_GENERICO' AND parametro = 'VAL_KINIT';"`
+VAL_KINIT=`mysql -N  <<<"select valor from params where ENTIDAD = 'SPARK_GENERICO' AND parametro = 'VAL_KINIT';"`
 $VAL_KINIT
 
 ###########################################################################################################################################################
 echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: Inicializacion del LOG"
 ###########################################################################################################################################################
 VAL_HORA=`date '+%Y%m%d%H%M%S'`
-VAL_RUTA=`mysql -N <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_RUTA';"` 
+VAL_RUTA=`mysql -N <<<"select valor from params where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_RUTA';"` 
 VAL_LOG=$VAL_RUTA/log/$ENTIDAD"_"$VAL_HORA.log
 echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: Iniciando registro en el log.." 2>&1 &>> $VAL_LOG
 
 ###########################################################################################################################################################
-echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: Parametros definidos en la tabla params_des" 2>&1 &>> $VAL_LOG
+echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: Parametros definidos en la tabla params" 2>&1 &>> $VAL_LOG
 ###########################################################################################################################################################
-VAL_RUTA_OUT=`mysql -N <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_RUTA_OUT';"` 
-VAL_HORA_INI_1=`mysql -N  <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_HORA_INI_1';"`
-VAL_HORA_FIN_1=`mysql -N  <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_HORA_FIN_1';"`
-VAL_HORA_INI_2=`mysql -N  <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_HORA_INI_2';"`
-VAL_HORA_FIN_2=`mysql -N  <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_HORA_FIN_2';"`
-VAL_HORA_INI_3=`mysql -N  <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_HORA_INI_3';"`
-VAL_HORA_FIN_3=`mysql -N  <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_HORA_FIN_3';"`
-VAL_TABLA_FINAL=`mysql -N  <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_TABLA_FINAL';"`
-VAL_MASTER=`mysql -N  <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_MASTER';"`
-VAL_DRIVER_MEMORY=`mysql -N  <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_DRIVER_MEMORY';"`
-VAL_EXECUTOR_MEMORY=`mysql -N  <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_EXECUTOR_MEMORY';"`
-VAL_NUM_EXECUTORS=`mysql -N  <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_NUM_EXECUTORS';"`
-VAL_NUM_EXECUTOR_CORES=`mysql -N  <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_NUM_EXECUTOR_CORES';"`
-VAL_QUEUE=`mysql -N  <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'QUEUE';"`
-VAL_CORREO_ASUNTO=`mysql -N  <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_CORREO_ASUNTO';"`
-VAL_CORREO_EMISOR=`mysql -N  <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_CORREO_EMISOR';"`
-VAL_CORREOS_RECEPTORES=`mysql -N  <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_CORREOS_RECEPTORES';"`
-ETAPA=`mysql -N  <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'ETAPA';"`
-EVENTO=`mysql -N  <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'EVENTO';"`
-SHELL=`mysql -N  <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'SHELL';"`
+VAL_RUTA_OUT=`mysql -N <<<"select valor from params where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_RUTA_OUT';"` 
+VAL_HORA_INI_1=`mysql -N  <<<"select valor from params where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_HORA_INI_1';"`
+VAL_HORA_FIN_1=`mysql -N  <<<"select valor from params where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_HORA_FIN_1';"`
+VAL_HORA_INI_2=`mysql -N  <<<"select valor from params where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_HORA_INI_2';"`
+VAL_HORA_FIN_2=`mysql -N  <<<"select valor from params where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_HORA_FIN_2';"`
+VAL_HORA_INI_3=`mysql -N  <<<"select valor from params where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_HORA_INI_3';"`
+VAL_HORA_FIN_3=`mysql -N  <<<"select valor from params where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_HORA_FIN_3';"`
+VAL_TABLA_FINAL=`mysql -N  <<<"select valor from params where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_TABLA_FINAL';"`
+VAL_MASTER=`mysql -N  <<<"select valor from params where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_MASTER';"`
+VAL_DRIVER_MEMORY=`mysql -N  <<<"select valor from params where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_DRIVER_MEMORY';"`
+VAL_EXECUTOR_MEMORY=`mysql -N  <<<"select valor from params where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_EXECUTOR_MEMORY';"`
+VAL_NUM_EXECUTORS=`mysql -N  <<<"select valor from params where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_NUM_EXECUTORS';"`
+VAL_NUM_EXECUTOR_CORES=`mysql -N  <<<"select valor from params where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_NUM_EXECUTOR_CORES';"`
+VAL_QUEUE=`mysql -N  <<<"select valor from params where ENTIDAD = '"$ENTIDAD"' AND parametro = 'QUEUE';"`
+VAL_CORREO_ASUNTO=`mysql -N  <<<"select valor from params where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_CORREO_ASUNTO';"`
+VAL_CORREO_EMISOR=`mysql -N  <<<"select valor from params where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_CORREO_EMISOR';"`
+VAL_CORREOS_RECEPTORES=`mysql -N  <<<"select valor from params where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_CORREOS_RECEPTORES';"`
+ETAPA=`mysql -N  <<<"select valor from params where ENTIDAD = '"$ENTIDAD"' AND parametro = 'ETAPA';"`
+EVENTO=`mysql -N  <<<"select valor from params where ENTIDAD = '"$ENTIDAD"' AND parametro = 'EVENTO';"`
+SHELL=`mysql -N  <<<"select valor from params where ENTIDAD = '"$ENTIDAD"' AND parametro = 'SHELL';"`
 
 ###################################################################################################################
-echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: Obtener y validar parametros de oracle definidos en la tabla params_des..." 2>&1 &>> $VAL_LOG
+echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: Obtener y validar parametros de oracle definidos en la tabla params..." 2>&1 &>> $VAL_LOG
 ###################################################################################################################
-TDDB=`mysql -N  <<<"select valor from params_des where entidad = 'D_SPARK_GENERICO'  AND parametro = 'TDSERVICE_RDB';"`
-TDUSER=`mysql -N  <<<"select valor from params_des where entidad = 'D_SPARK_GENERICO'  AND parametro = 'TDUSER_RDB';"`
-TDPASS=`mysql -N  <<<"select valor from params_des where entidad = 'D_SPARK_GENERICO'  AND parametro = 'TDPASS_RDB';"`
-TDHOST=`mysql -N  <<<"select valor from params_des where entidad = 'D_SPARK_GENERICO'  AND parametro = 'TDHOST_RDB2';"`
-TDPORT=`mysql -N  <<<"select valor from params_des where entidad = 'D_SPARK_GENERICO'  AND parametro = 'TDPORT_RDB';"`
-TDCLASS=`mysql -N  <<<"select valor from params_des where entidad = 'D_SPARK_GENERICO'  AND parametro = 'TDCLASS_ORC';"`
+TDDB=`mysql -N  <<<"select valor from params where entidad = 'SPARK_GENERICO'  AND parametro = 'TDSERVICE_RDB';"`
+TDUSER=`mysql -N  <<<"select valor from params where entidad = 'SPARK_GENERICO'  AND parametro = 'TDUSER_RDB';"`
+TDPASS=`mysql -N  <<<"select valor from params where entidad = 'SPARK_GENERICO'  AND parametro = 'TDPASS_RDB';"`
+TDHOST=`mysql -N  <<<"select valor from params where entidad = 'SPARK_GENERICO'  AND parametro = 'TDHOST_RDB2';"`
+TDPORT=`mysql -N  <<<"select valor from params where entidad = 'SPARK_GENERICO'  AND parametro = 'TDPORT_RDB';"`
+TDCLASS=`mysql -N  <<<"select valor from params where entidad = 'SPARK_GENERICO'  AND parametro = 'TDCLASS_ORC';"`
 
 ###################################################################################################################
 echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: Obtener y validar parametros genericos SPARK..." 2>&1 &>> $VAL_LOG
 ###################################################################################################################
-VAL_RUTA_SPARK=`mysql -N  <<<"select valor from params_des where ENTIDAD = 'D_SPARK_GENERICO' AND parametro = 'VAL_RUTA_SPARK';"`
-VAL_RUTA_LIB=`mysql -N  <<<"select valor from params_des where entidad = 'D_SPARK_GENERICO'  AND parametro = 'VAL_RUTA_LIB';"`
-VAL_LIB=`mysql -N  <<<"select valor from params_des where entidad = 'D_SPARK_GENERICO'  AND parametro = 'VAL_NOM_JAR_ORC_11';"`
+VAL_RUTA_SPARK=`mysql -N  <<<"select valor from params where ENTIDAD = 'SPARK_GENERICO' AND parametro = 'VAL_RUTA_SPARK';"`
+VAL_RUTA_LIB=`mysql -N  <<<"select valor from params where entidad = 'SPARK_GENERICO'  AND parametro = 'VAL_RUTA_LIB';"`
+VAL_LIB=`mysql -N  <<<"select valor from params where entidad = 'SPARK_GENERICO'  AND parametro = 'VAL_NOM_JAR_ORC_11';"`
 
 ###########################################################################################################################################################
 echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: Parametros calculados" 2>&1 &>> $VAL_LOG
@@ -173,9 +173,9 @@ $VAL_RUTA/python/carga_reporte_pedidos_canales.py \
 	else
 		echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: ETAPA 1 --> La carga de informacion a ORACLE fue ejecutada de manera EXITOSA" 2>&1 &>> $VAL_LOG	
 		ETAPA=2
-		#SE REALIZA EL SETEO DE LA ETAPA EN LA TABLA params_des
+		#SE REALIZA EL SETEO DE LA ETAPA EN LA TABLA params
 		echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: $SHELL --> Se procesa la ETAPA 1 con EXITO " 2>&1 &>> $VAL_LOG
-		`mysql -N  <<<"update params_des set valor='2' where ENTIDAD = '${ENTIDAD}' and parametro = 'ETAPA';"`
+		`mysql -N  <<<"update params set valor='2' where ENTIDAD = '${ENTIDAD}' and parametro = 'ETAPA';"`
 	fi
 	fi
 
@@ -190,9 +190,9 @@ $VAL_RUTA/python/carga_reporte_pedidos_canales.py \
 	-S from=$VAL_CORREO_EMISOR $VAL_CORREOS_RECEPTORES
 	echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: El MAIL con el archivo CSV se envia correctamente" 2>&1 &>> $VAL_LOG
 
-	#SE REALIZA EL SETEO DE LA ETAPA EN LA TABLA params_des
-		`mysql -N  <<<"update params_des set valor='1' where ENTIDAD = '${ENTIDAD}' and parametro = 'ETAPA';"`
-		`mysql -N  <<<"update params_des set valor='2' where ENTIDAD = '${ENTIDAD}' and parametro = 'EVENTO';"`
+	#SE REALIZA EL SETEO DE LA ETAPA EN LA TABLA params
+		`mysql -N  <<<"update params set valor='1' where ENTIDAD = '${ENTIDAD}' and parametro = 'ETAPA';"`
+		`mysql -N  <<<"update params set valor='2' where ENTIDAD = '${ENTIDAD}' and parametro = 'EVENTO';"`
 		echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: El proceso REPORTE_PEDIDOS_CANALES finaliza correctamente " 2>&1 &>> $VAL_LOG
 	fi
 
@@ -245,9 +245,9 @@ $VAL_RUTA/python/carga_reporte_pedidos_canales.py \
 	else
 		echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: ETAPA 1 --> La carga de informacion a ORACLE fue ejecutada de manera EXITOSA" 2>&1 &>> $VAL_LOG	
 		ETAPA=2
-		#SE REALIZA EL SETEO DE LA ETAPA EN LA TABLA params_des
+		#SE REALIZA EL SETEO DE LA ETAPA EN LA TABLA params
 		echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: $SHELL --> Se procesa la ETAPA 1 con EXITO " 2>&1 &>> $VAL_LOG
-		`mysql -N  <<<"update params_des set valor='2' where ENTIDAD = '${ENTIDAD}' and parametro = 'ETAPA';"`
+		`mysql -N  <<<"update params set valor='2' where ENTIDAD = '${ENTIDAD}' and parametro = 'ETAPA';"`
 	fi
 	fi
 
@@ -262,9 +262,9 @@ $VAL_RUTA/python/carga_reporte_pedidos_canales.py \
 	-S from=$VAL_CORREO_EMISOR $VAL_CORREOS_RECEPTORES
 	echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: El MAIL con el archivo CSV se envia correctamente" 2>&1 &>> $VAL_LOG
 
-	#SE REALIZA EL SETEO DE LA ETAPA EN LA TABLA params_des
-		`mysql -N  <<<"update params_des set valor='1' where ENTIDAD = '${ENTIDAD}' and parametro = 'ETAPA';"`
-		`mysql -N  <<<"update params_des set valor='3' where ENTIDAD = '${ENTIDAD}' and parametro = 'EVENTO';"`
+	#SE REALIZA EL SETEO DE LA ETAPA EN LA TABLA params
+		`mysql -N  <<<"update params set valor='1' where ENTIDAD = '${ENTIDAD}' and parametro = 'ETAPA';"`
+		`mysql -N  <<<"update params set valor='3' where ENTIDAD = '${ENTIDAD}' and parametro = 'EVENTO';"`
 		echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: El proceso REPORTE_PEDIDOS_CANALES finaliza correctamente " 2>&1 &>> $VAL_LOG
 	fi
 
@@ -317,9 +317,9 @@ $VAL_RUTA/python/carga_reporte_pedidos_canales.py \
 	else
 		echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: ETAPA 1 --> La carga de informacion a ORACLE fue ejecutada de manera EXITOSA" 2>&1 &>> $VAL_LOG	
 		ETAPA=2
-		#SE REALIZA EL SETEO DE LA ETAPA EN LA TABLA params_des
+		#SE REALIZA EL SETEO DE LA ETAPA EN LA TABLA params
 		echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: $SHELL --> Se procesa la ETAPA 1 con EXITO " 2>&1 &>> $VAL_LOG
-		`mysql -N  <<<"update params_des set valor='2' where ENTIDAD = '${ENTIDAD}' and parametro = 'ETAPA';"`
+		`mysql -N  <<<"update params set valor='2' where ENTIDAD = '${ENTIDAD}' and parametro = 'ETAPA';"`
 	fi
 	fi
 
@@ -334,9 +334,9 @@ $VAL_RUTA/python/carga_reporte_pedidos_canales.py \
 	-S from=$VAL_CORREO_EMISOR $VAL_CORREOS_RECEPTORES
 	echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: El MAIL con el archivo CSV se envia correctamente" 2>&1 &>> $VAL_LOG
 
-	#SE REALIZA EL SETEO DE LA ETAPA EN LA TABLA params_des
-		`mysql -N  <<<"update params_des set valor='1' where ENTIDAD = '${ENTIDAD}' and parametro = 'ETAPA';"`
-		`mysql -N  <<<"update params_des set valor='1' where ENTIDAD = '${ENTIDAD}' and parametro = 'EVENTO';"`
+	#SE REALIZA EL SETEO DE LA ETAPA EN LA TABLA params
+		`mysql -N  <<<"update params set valor='1' where ENTIDAD = '${ENTIDAD}' and parametro = 'ETAPA';"`
+		`mysql -N  <<<"update params set valor='1' where ENTIDAD = '${ENTIDAD}' and parametro = 'EVENTO';"`
 		echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: El proceso REPORTE_PEDIDOS_CANALES finaliza correctamente " 2>&1 &>> $VAL_LOG
 	fi
 
