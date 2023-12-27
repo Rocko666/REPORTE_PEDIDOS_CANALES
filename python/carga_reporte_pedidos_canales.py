@@ -3,6 +3,8 @@ reload(sys)
 #sys.setdefaultencoding('windows-1252')
 from query import *
 from pyspark.sql import SparkSession
+from pyspark.sql.functions import col
+from pyspark.sql.types import StructType, StructField, IntegerType, StringType, DecimalType
 from datetime import datetime
 from pyspark.sql.functions import *
 import argparse
@@ -68,14 +70,44 @@ try:
 			.option("user",vTDUser)\
 			.option("password",vTDPass)\
 			.option("fetchsize",1000)\
-			.option("dbtable",vSQL).load()
+			.option("dbtable","({})".format(vSQL))\
+            .load()
+    
+    # Aplicar el esquema a las columnas correspondientes
+    df01 = df01.withColumn("WORK_ITEM_ID", col("WORK_ITEM_ID").cast(StringType())) \
+            .withColumn("CREATED_WHEN", col("CREATED_WHEN").cast(StringType())) \
+            .withColumn("TYPE_", col("TYPE_").cast(StringType())) \
+            .withColumn("MO_TYPE", col("MO_TYPE").cast(StringType())) \
+            .withColumn("MOVEMENT_ORDER_ID", col("MOVEMENT_ORDER_ID").cast(StringType())) \
+            .withColumn("MO_STATUS", col("MO_STATUS").cast(StringType())) \
+            .withColumn("CUSTOMER_ID", col("CUSTOMER_ID").cast(StringType())) \
+            .withColumn("CUSTOMER_NAME", col("CUSTOMER_NAME").cast(StringType())) \
+            .withColumn("CONTEXTID", col("CONTEXTID").cast(StringType())) \
+            .withColumn("SO_TYPE", col("SO_TYPE").cast(StringType())) \
+            .withColumn("EQUIPMENT_CONDITION", col("EQUIPMENT_CONDITION").cast(StringType())) \
+            .withColumn("PREACTIVATION_TEMPLATE_ID", col("PREACTIVATION_TEMPLATE_ID").cast(StringType())) \
+            .withColumn("PREACTIVATION_TEMPLATE_NAME", col("PREACTIVATION_TEMPLATE_NAME").cast(StringType())) \
+            .withColumn("EQUIPMENT_NAME", col("EQUIPMENT_NAME").cast(StringType())) \
+            .withColumn("EQUIPMENT_ID", col("EQUIPMENT_ID").cast(DecimalType(38,0))) \
+            .withColumn("ARTICLE", col("ARTICLE").cast(StringType())) \
+            .withColumn("MOVE_ORDER_LINE_ID", col("MOVE_ORDER_LINE_ID").cast(StringType())) \
+            .withColumn("LOCATION_FROM_NAME", col("LOCATION_FROM_NAME").cast(StringType())) \
+            .withColumn("LOCATION_FROM_ID", col("LOCATION_FROM_ID").cast(StringType())) \
+            .withColumn("LOCATION_TO_NAME", col("LOCATION_TO_NAME").cast(StringType())) \
+            .withColumn("LOCATION_TO_ID", col("LOCATION_TO_ID").cast(StringType())) \
+            .withColumn("APPROVED_QUANTITY", col("APPROVED_QUANTITY").cast(StringType())) \
+            .withColumn("RESERVED_QUANTITY", col("RESERVED_QUANTITY").cast(IntegerType())) \
+            .withColumn("DISPATCHED_QUANTITY", col("DISPATCHED_QUANTITY").cast(IntegerType())) \
+            .withColumn("RECEIVED_QUANTITY", col("RECEIVED_QUANTITY").cast(IntegerType())) \
+            .withColumn("TO_BE_DISPATCHED", col("TO_BE_DISPATCHED").cast(IntegerType())) 
+    
     df01.printSchema()
     ts_step_tbl = datetime.now()
+    # La linea de abajo queda comentada en caso de ser necesario que el proceso escriba una tabla en HIVE 
     #df01.repartition(1).write.mode("overwrite").format('parquet').saveAsTable(vTFinal)
-    print(etq_info('Spark datafrmae a pandas DF:'))
+    print(etq_info('Spark dataframe a pandas DF:'))
     pandas_df = df01.toPandas()
     print(etq_info('Generando CSV...:'))
-    #pandas_df.to_csv(vROut, sep=';',index=False, chunksize=10)
     pandas_df.to_csv(vROut, sep=';',index=False, encoding='windows-1252')
     print(etq_info(msg_t_total_registros_obtenidos("df01",str(df01.count())))) 
     te_step_tbl = datetime.now()

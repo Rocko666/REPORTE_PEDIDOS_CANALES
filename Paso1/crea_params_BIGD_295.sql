@@ -21,5 +21,14 @@ INSERT INTO params_des(ENTIDAD,PARAMETRO,VALOR,ORDEN,AMBIENTE) VALUES('D_RPRTPDD
 INSERT INTO params_des(ENTIDAD,PARAMETRO,VALOR,ORDEN,AMBIENTE) VALUES('D_RPRTPDDSCNLS0010','VAL_NUM_EXECUTOR_CORES','8','0','0');
 INSERT INTO params_des(ENTIDAD,PARAMETRO,VALOR,ORDEN,AMBIENTE) VALUES('D_RPRTPDDSCNLS0010','VAL_CORREO_ASUNTO','Reporte pedidos canales','0','0');
 INSERT INTO params_des(ENTIDAD,PARAMETRO,VALOR,ORDEN,AMBIENTE) VALUES('D_RPRTPDDSCNLS0010','VAL_CORREO_EMISOR','cortiz@softconsulting.com.ec','0','0');
-INSERT INTO params_des(ENTIDAD,PARAMETRO,VALOR,ORDEN,AMBIENTE) VALUES('D_RPRTPDDSCNLS0010','VAL_CORREOS_RECEPTORES','cortiz@softconsulting.com.ec','0','0');
+INSERT INTO params_des(ENTIDAD,PARAMETRO,VALOR,ORDEN,AMBIENTE) VALUES('D_RPRTPDDSCNLS0010','VAL_CORREOS_RECEPTORES','cortiz@softconsulting.com.ec,sjimenez@softconsulting.com.ec,jorge.martinezortega@telefonica.com,daysi.quilumbasiavichay@telefonica.com,jgarcia@softconsulting.com.ec,esteban.romero@telefonica.com,amacas@softconsulting.com.ec','0','0');
 SELECT * FROM params_des WHERE ENTIDAD='D_RPRTPDDSCNLS0010';
+
+
+
+
+
+
+INSERT INTO params_des(ENTIDAD,PARAMETRO,VALOR,ORDEN,AMBIENTE) VALUES('D_RPRTPDDSCNLS0010','VAL_CORREOS_RECEPTORES','cortiz@softconsulting.com.ec,sjimenez@softconsulting.com.ec,jorge.martinezortega@telefonica.com,daysi.quilumbasiavichay@telefonica.com,jgarcia@softconsulting.com.ec,esteban.romero@telefonica.com,amacas@softconsulting.com.ec','0','0');
+
+INSERT INTO params_des(ENTIDAD,PARAMETRO,VALOR,ORDEN,AMBIENTE) VALUES('D_RPRTPDDSCNLS0010','VAL_CORREOS_RECEPTORES','cortiz@softconsulting.com.ec','0','0');
