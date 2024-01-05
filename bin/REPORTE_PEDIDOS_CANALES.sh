@@ -17,6 +17,13 @@ set -e
 # VARIABLES #
 ##############
 ENTIDAD=D_RPRTPDDSCNLS0010
+AMBIENTE=0 # AMBIENTE (1=produccion, 0=desarrollo)
+
+if [ $AMBIENTE -gt 0 ]; then
+    TABLA=params
+else
+    TABLA=params_des
+fi
 
 ###########################################################################################################################################################
 echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: Lectura de parametros iniciales"
@@ -28,36 +35,41 @@ $VAL_KINIT
 echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: Inicializacion del LOG"
 ###########################################################################################################################################################
 VAL_HORA=`date '+%Y%m%d%H%M%S'`
-VAL_RUTA=`mysql -N <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_RUTA';"` 
+VAL_RUTA=`mysql -N <<<"select valor from $TABLA where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_RUTA';"` 
 VAL_LOG=$VAL_RUTA/log/$ENTIDAD"_"$VAL_HORA.log
 echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: Iniciando registro en el log.." 2>&1 &>> $VAL_LOG
 
 ###########################################################################################################################################################
-echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: Parametros definidos en la tabla params_des" 2>&1 &>> $VAL_LOG
+echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: Parametros definidos en la tabla $TABLA" 2>&1 &>> $VAL_LOG
 ###########################################################################################################################################################
-VAL_RUTA_OUT=`mysql -N <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_RUTA_OUT';"` 
-VAL_HORA_INI_1=`mysql -N  <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_HORA_INI_1';"`
-VAL_HORA_FIN_1=`mysql -N  <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_HORA_FIN_1';"`
-VAL_HORA_INI_2=`mysql -N  <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_HORA_INI_2';"`
-VAL_HORA_FIN_2=`mysql -N  <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_HORA_FIN_2';"`
-VAL_HORA_INI_3=`mysql -N  <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_HORA_INI_3';"`
-VAL_HORA_FIN_3=`mysql -N  <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_HORA_FIN_3';"`
-VAL_TABLA_FINAL=`mysql -N  <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_TABLA_FINAL';"`
-VAL_MASTER=`mysql -N  <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_MASTER';"`
-VAL_DRIVER_MEMORY=`mysql -N  <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_DRIVER_MEMORY';"`
-VAL_EXECUTOR_MEMORY=`mysql -N  <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_EXECUTOR_MEMORY';"`
-VAL_NUM_EXECUTORS=`mysql -N  <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_NUM_EXECUTORS';"`
-VAL_NUM_EXECUTOR_CORES=`mysql -N  <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_NUM_EXECUTOR_CORES';"`
-VAL_QUEUE=`mysql -N  <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'QUEUE';"`
-VAL_CORREO_ASUNTO=`mysql -N  <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_CORREO_ASUNTO';"`
-VAL_CORREO_EMISOR=`mysql -N  <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_CORREO_EMISOR';"`
-VAL_CORREOS_RECEPTORES=`mysql -N  <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_CORREOS_RECEPTORES';"`
-ETAPA=`mysql -N  <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'ETAPA';"`
-EVENTO=`mysql -N  <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'EVENTO';"`
-SHELL=`mysql -N  <<<"select valor from params_des where ENTIDAD = '"$ENTIDAD"' AND parametro = 'SHELL';"`
+VAL_RUTA_OUT=`mysql -N <<<"select valor from $TABLA where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_RUTA_OUT';"` 
+VAL_HORA_INI_1=`mysql -N  <<<"select valor from $TABLA where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_HORA_INI_1';"`
+VAL_HORA_FIN_1=`mysql -N  <<<"select valor from $TABLA where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_HORA_FIN_1';"`
+VAL_HORA_INI_2=`mysql -N  <<<"select valor from $TABLA where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_HORA_INI_2';"`
+VAL_HORA_FIN_2=`mysql -N  <<<"select valor from $TABLA where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_HORA_FIN_2';"`
+VAL_HORA_INI_3=`mysql -N  <<<"select valor from $TABLA where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_HORA_INI_3';"`
+VAL_HORA_FIN_3=`mysql -N  <<<"select valor from $TABLA where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_HORA_FIN_3';"`
+VAL_TABLA_FINAL=`mysql -N  <<<"select valor from $TABLA where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_TABLA_FINAL';"`
+VAL_TABLA_TMP=`mysql -N  <<<"select valor from $TABLA where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_TABLA_TMP';"`
+VAL_TIPO_CARGA=`mysql -N  <<<"select valor from $TABLA where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_TIPO_CARGA';"`
+VAL_REPARTITION=`mysql -N  <<<"select valor from $TABLA where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_REPARTITION';"`
+VAL_FETCH_SIZE=`mysql -N  <<<"select valor from $TABLA where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_FETCH_SIZE';"`
+VAL_MASTER=`mysql -N  <<<"select valor from $TABLA where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_MASTER';"`
+VAL_DRIVER_MEMORY=`mysql -N  <<<"select valor from $TABLA where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_DRIVER_MEMORY';"`
+VAL_EXECUTOR_MEMORY=`mysql -N  <<<"select valor from $TABLA where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_EXECUTOR_MEMORY';"`
+VAL_NUM_EXECUTORS=`mysql -N  <<<"select valor from $TABLA where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_NUM_EXECUTORS';"`
+VAL_NUM_EXECUTOR_CORES=`mysql -N  <<<"select valor from $TABLA where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_NUM_EXECUTOR_CORES';"`
+VAL_QUEUE=`mysql -N  <<<"select valor from $TABLA where ENTIDAD = '"$ENTIDAD"' AND parametro = 'QUEUE';"`
+VAL_CORREO_ASUNTO=`mysql -N  <<<"select valor from $TABLA where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_CORREO_ASUNTO';"`
+VAL_CORREO_EMISOR=`mysql -N  <<<"select valor from $TABLA where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_CORREO_EMISOR';"`
+VAL_CORREOS_RECEPTORES=`mysql -N  <<<"select valor from $TABLA where ENTIDAD = '"$ENTIDAD"' AND parametro = 'VAL_CORREOS_RECEPTORES';"`
+ETAPA=`mysql -N  <<<"select valor from $TABLA where ENTIDAD = '"$ENTIDAD"' AND parametro = 'ETAPA';"`
+EVENTO=`mysql -N  <<<"select valor from $TABLA where ENTIDAD = '"$ENTIDAD"' AND parametro = 'EVENTO';"`
+SHELL=`mysql -N  <<<"select valor from $TABLA where ENTIDAD = '"$ENTIDAD"' AND parametro = 'SHELL';"`
+
 
 ###################################################################################################################
-echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: Obtener y validar parametros de oracle definidos en la tabla params_des..." 2>&1 &>> $VAL_LOG
+echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: Obtener y validar parametros de oracle definidos en la tabla $TABLA..." 2>&1 &>> $VAL_LOG
 ###################################################################################################################
 TDDB=`mysql -N  <<<"select valor from params_des where entidad = 'D_SPARK_GENERICO'  AND parametro = 'TDSERVICE_RDB';"`
 TDUSER=`mysql -N  <<<"select valor from params_des where entidad = 'D_SPARK_GENERICO'  AND parametro = 'TDUSER_RDB';"`
@@ -97,6 +109,10 @@ if  [ -z "$ENTIDAD" ] ||
 	[ -z "$VAL_HORA_INI_3" ] || 
 	[ -z "$VAL_HORA_FIN_3" ] || 
 	[ -z "$VAL_TABLA_FINAL" ] || 
+	[ -z "$VAL_TABLA_TMP" ] ||
+	[ -z "$VAL_TIPO_CARGA" ] || 
+	[ -z "$VAL_REPARTITION" ] || 
+	[ -z "$VAL_FETCH_SIZE" ] || 
 	[ -z "$VAL_MASTER" ] || 
 	[ -z "$VAL_DRIVER_MEMORY" ] || 
 	[ -z "$VAL_EXECUTOR_MEMORY" ] || 
@@ -132,69 +148,7 @@ case $EVENTO in
 	VAL_DIA_FIN=`date '+%d/%m/%Y' -d "$VAL_FECHA_PROCESO"`
 	VAL_HORA_INI=$VAL_HORA_INI_1
 	VAL_HORA_FIN=$VAL_HORA_FIN_1
-
-	if [ "$ETAPA" = "1" ]; then
-	###########################################################################################################################################################
-	echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: ETAPA 1: Oracle Import " 2>&1 &>> $VAL_LOG
-	###########################################################################################################################################################
-	echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: DIA_INICIAL => " $VAL_DIA_INI 2>&1 &>> $VAL_LOG
-	echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: DIA_FINAL => " $VAL_DIA_FIN 2>&1 &>> $VAL_LOG
-	echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: HORA_INICIAL => " $VAL_HORA_INI 2>&1 &>> $VAL_LOG
-	echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: HORA_FINAL => " $VAL_HORA_FIN 2>&1 &>> $VAL_LOG
-	echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: JDBCURL1 => " $JDBCURL1 2>&1 &>> $VAL_LOG
-
-$VAL_RUTA_SPARK \
---conf spark.port.maxRetries=100 \
---name $ENTIDAD \
---master $VAL_MASTER \
---driver-memory $VAL_DRIVER_MEMORY \
---executor-memory $VAL_EXECUTOR_MEMORY \
---num-executors $VAL_NUM_EXECUTORS \
---executor-cores $VAL_NUM_EXECUTOR_CORES \
---jars $VAL_RUTA_LIB/$VAL_LIB \
---queue $VAL_QUEUE \
-$VAL_RUTA/python/carga_reporte_pedidos_canales.py \
---vTFinal=$VAL_TABLA_FINAL \
---vROut=$VAL_RUTA_OUT \
---vDiaIni=$VAL_DIA_INI \
---vDiaFin=$VAL_DIA_FIN \
---vHoraIni=$VAL_HORA_INI \
---vHoraFin=$VAL_HORA_FIN \
---vJdbcUrl=$JDBCURL1 \
---vTDPass=$TDPASS \
---vTDUser=$TDUSER \
---vTDClass=$TDCLASS 2>&1 &>> $VAL_LOG
-
-	# Se valida el LOG de la ejecucion, si se encuentran errores se finaliza con error >0
-	VAL_ERRORES=`egrep 'NODATA:|ERROR:|FAILED:|Error|Table not found|Table already exists|Vertex|Permission denied|cannot resolve' $VAL_LOG | wc -l`
-	if [ $VAL_ERRORES -ne 0 ];then
-		echo `date '+%Y-%m-%d %H:%M:%S'`" ERROR: ETAPA 1 --> Problemas en la carga de informacion a ORACLE " 2>&1 &>> $VAL_LOG
-		exit 1																																 
-	else
-		echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: ETAPA 1 --> La carga de informacion a ORACLE fue ejecutada de manera EXITOSA" 2>&1 &>> $VAL_LOG	
-		ETAPA=2
-		#SE REALIZA EL SETEO DE LA ETAPA EN LA TABLA params_des
-		echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: $SHELL --> Se procesa la ETAPA 1 con EXITO " 2>&1 &>> $VAL_LOG
-		`mysql -N  <<<"update params_des set valor='2' where ENTIDAD = '${ENTIDAD}' and parametro = 'ETAPA';"`
-	fi
-	fi
-
-	if [ "$ETAPA" = "2" ]; then
-	###########################################################################################################################################################
-	echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: ETAPA 2: Envio de archivo CSV por MAIL " 2>&1 &>> $VAL_LOG
-	###########################################################################################################################################################
-	echo "Reporte:
-	$VAL_DIA_INI $VAL_HORA_INI"-"$VAL_DIA_FIN $VAL_HORA_FIN
-	" | mailx -s "${VAL_CORREO_ASUNTO}" \
-	-a $VAL_RUTA_OUT \
-	-S from=$VAL_CORREO_EMISOR $VAL_CORREOS_RECEPTORES
-	echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: El MAIL con el archivo CSV se envia correctamente" 2>&1 &>> $VAL_LOG
-
-	#SE REALIZA EL SETEO DE LA ETAPA EN LA TABLA params_des
-		`mysql -N  <<<"update params_des set valor='1' where ENTIDAD = '${ENTIDAD}' and parametro = 'ETAPA';"`
-		`mysql -N  <<<"update params_des set valor='2' where ENTIDAD = '${ENTIDAD}' and parametro = 'EVENTO';"`
-		echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: El proceso REPORTE_PEDIDOS_CANALES finaliza correctamente " 2>&1 &>> $VAL_LOG
-	fi
+	VAL_SIG_EVENTO=2
 
     ;;
 	2)
@@ -204,69 +158,7 @@ $VAL_RUTA/python/carga_reporte_pedidos_canales.py \
 	VAL_DIA_FIN=`date '+%d/%m/%Y' -d "$VAL_FECHA_PROCESO"`
 	VAL_HORA_INI=$VAL_HORA_INI_2
 	VAL_HORA_FIN=$VAL_HORA_FIN_2
-
-	if [ "$ETAPA" = "1" ]; then
-	###########################################################################################################################################################
-	echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: ETAPA 1: Oracle Import " 2>&1 &>> $VAL_LOG
-	###########################################################################################################################################################
-	echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: DIA_INICIAL => " $VAL_DIA_INI 2>&1 &>> $VAL_LOG
-	echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: DIA_FINAL => " $VAL_DIA_FIN 2>&1 &>> $VAL_LOG
-	echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: HORA_INICIAL => " $VAL_HORA_INI 2>&1 &>> $VAL_LOG
-	echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: HORA_FINAL => " $VAL_HORA_FIN 2>&1 &>> $VAL_LOG
-	echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: JDBCURL1 => " $JDBCURL1 2>&1 &>> $VAL_LOG
-
-$VAL_RUTA_SPARK \
---conf spark.port.maxRetries=100 \
---name $ENTIDAD \
---master $VAL_MASTER \
---driver-memory $VAL_DRIVER_MEMORY \
---executor-memory $VAL_EXECUTOR_MEMORY \
---num-executors $VAL_NUM_EXECUTORS \
---executor-cores $VAL_NUM_EXECUTOR_CORES \
---jars $VAL_RUTA_LIB/$VAL_LIB \
---queue $VAL_QUEUE \
-$VAL_RUTA/python/carga_reporte_pedidos_canales.py \
---vTFinal=$VAL_TABLA_FINAL \
---vROut=$VAL_RUTA_OUT \
---vDiaIni=$VAL_DIA_INI \
---vDiaFin=$VAL_DIA_FIN \
---vHoraIni=$VAL_HORA_INI \
---vHoraFin=$VAL_HORA_FIN \
---vJdbcUrl=$JDBCURL1 \
---vTDPass=$TDPASS \
---vTDUser=$TDUSER \
---vTDClass=$TDCLASS 2>&1 &>> $VAL_LOG
-
-	# Se valida el LOG de la ejecucion, si se encuentran errores se finaliza con error >0
-	VAL_ERRORES=`egrep 'NODATA:|ERROR:|FAILED:|Error|Table not found|Table already exists|Vertex|Permission denied|cannot resolve' $VAL_LOG | wc -l`
-	if [ $VAL_ERRORES -ne 0 ];then
-		echo `date '+%Y-%m-%d %H:%M:%S'`" ERROR: ETAPA 1 --> Problemas en la carga de informacion a ORACLE " 2>&1 &>> $VAL_LOG
-		exit 1																																 
-	else
-		echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: ETAPA 1 --> La carga de informacion a ORACLE fue ejecutada de manera EXITOSA" 2>&1 &>> $VAL_LOG	
-		ETAPA=2
-		#SE REALIZA EL SETEO DE LA ETAPA EN LA TABLA params_des
-		echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: $SHELL --> Se procesa la ETAPA 1 con EXITO " 2>&1 &>> $VAL_LOG
-		`mysql -N  <<<"update params_des set valor='2' where ENTIDAD = '${ENTIDAD}' and parametro = 'ETAPA';"`
-	fi
-	fi
-
-	if [ "$ETAPA" = "2" ]; then
-	###########################################################################################################################################################
-	echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: ETAPA 2: Envio de archivo CSV por MAIL " 2>&1 &>> $VAL_LOG
-	###########################################################################################################################################################
-	echo "Reporte:
-	$VAL_DIA_INI $VAL_HORA_INI"-"$VAL_DIA_FIN $VAL_HORA_FIN
-	" | mailx -s "${VAL_CORREO_ASUNTO}" \
-	-a $VAL_RUTA_OUT \
-	-S from=$VAL_CORREO_EMISOR $VAL_CORREOS_RECEPTORES
-	echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: El MAIL con el archivo CSV se envia correctamente" 2>&1 &>> $VAL_LOG
-
-	#SE REALIZA EL SETEO DE LA ETAPA EN LA TABLA params_des
-		`mysql -N  <<<"update params_des set valor='1' where ENTIDAD = '${ENTIDAD}' and parametro = 'ETAPA';"`
-		`mysql -N  <<<"update params_des set valor='3' where ENTIDAD = '${ENTIDAD}' and parametro = 'EVENTO';"`
-		echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: El proceso REPORTE_PEDIDOS_CANALES finaliza correctamente " 2>&1 &>> $VAL_LOG
-	fi
+	VAL_SIG_EVENTO=3
 
     ;;
 	3)
@@ -276,16 +168,23 @@ $VAL_RUTA/python/carga_reporte_pedidos_canales.py \
 	VAL_DIA_FIN=`date '+%d/%m/%Y' -d "$VAL_FECHA_PROCESO"`
 	VAL_HORA_INI=$VAL_HORA_INI_3
 	VAL_HORA_FIN=$VAL_HORA_FIN_3
+	VAL_SIG_EVENTO=1
 
-	if [ "$ETAPA" = "1" ]; then
-	###########################################################################################################################################################
-	echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: ETAPA 1: Oracle Import " 2>&1 &>> $VAL_LOG
-	###########################################################################################################################################################
-	echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: DIA_INICIAL => " $VAL_DIA_INI 2>&1 &>> $VAL_LOG
-	echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: DIA_FINAL => " $VAL_DIA_FIN 2>&1 &>> $VAL_LOG
-	echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: HORA_INICIAL => " $VAL_HORA_INI 2>&1 &>> $VAL_LOG
-	echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: HORA_FINAL => " $VAL_HORA_FIN 2>&1 &>> $VAL_LOG
-	echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: JDBCURL1 => " $JDBCURL1 2>&1 &>> $VAL_LOG
+    ;;
+	*)
+    echo `date '+%Y-%m-%d %H:%M:%S'`" ERROR: Evento no valido" 2>&1 &>> $VAL_LOG
+    ;;
+esac
+
+if [ "$ETAPA" = "1" ]; then
+###########################################################################################################################################################
+echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: ETAPA 1: Oracle Import " 2>&1 &>> $VAL_LOG
+###########################################################################################################################################################
+echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: DIA_INICIAL => " $VAL_DIA_INI 2>&1 &>> $VAL_LOG
+echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: DIA_FINAL => " $VAL_DIA_FIN 2>&1 &>> $VAL_LOG
+echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: HORA_INICIAL => " $VAL_HORA_INI 2>&1 &>> $VAL_LOG
+echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: HORA_FINAL => " $VAL_HORA_FIN 2>&1 &>> $VAL_LOG
+echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: JDBCURL1 => " $JDBCURL1 2>&1 &>> $VAL_LOG
 
 $VAL_RUTA_SPARK \
 --conf spark.port.maxRetries=100 \
@@ -299,6 +198,7 @@ $VAL_RUTA_SPARK \
 --queue $VAL_QUEUE \
 $VAL_RUTA/python/carga_reporte_pedidos_canales.py \
 --vTFinal=$VAL_TABLA_FINAL \
+--vTTmp=$VAL_TABLA_TMP \
 --vROut=$VAL_RUTA_OUT \
 --vDiaIni=$VAL_DIA_INI \
 --vDiaFin=$VAL_DIA_FIN \
@@ -307,26 +207,27 @@ $VAL_RUTA/python/carga_reporte_pedidos_canales.py \
 --vJdbcUrl=$JDBCURL1 \
 --vTDPass=$TDPASS \
 --vTDUser=$TDUSER \
+--vTCarga=$VAL_TIPO_CARGA \
+--vRepartition=$VAL_REPARTITION \
+--vFetchSize=$VAL_FETCH_SIZE \
+--vFProc=$VAL_FECHA_PROCESO \
 --vTDClass=$TDCLASS 2>&1 &>> $VAL_LOG
 
-	# Se valida el LOG de la ejecucion, si se encuentran errores se finaliza con error >0
-	VAL_ERRORES=`egrep 'NODATA:|ERROR:|FAILED:|Error|Table not found|Table already exists|Vertex|Permission denied|cannot resolve' $VAL_LOG | wc -l`
-	if [ $VAL_ERRORES -ne 0 ];then
-		echo `date '+%Y-%m-%d %H:%M:%S'`" ERROR: ETAPA 1 --> Problemas en la carga de informacion a ORACLE " 2>&1 &>> $VAL_LOG
-		exit 1																																 
-	else
-		echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: ETAPA 1 --> La carga de informacion a ORACLE fue ejecutada de manera EXITOSA" 2>&1 &>> $VAL_LOG	
-		ETAPA=2
-		#SE REALIZA EL SETEO DE LA ETAPA EN LA TABLA params_des
-		echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: $SHELL --> Se procesa la ETAPA 1 con EXITO " 2>&1 &>> $VAL_LOG
-		`mysql -N  <<<"update params_des set valor='2' where ENTIDAD = '${ENTIDAD}' and parametro = 'ETAPA';"`
-	fi
-	fi
+echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: ETAPA 1 --> La carga de informacion a ORACLE fue ejecutada de manera EXITOSA" 2>&1 &>> $VAL_LOG	
+ETAPA=2
+#SE REALIZA EL SETEO DE LA ETAPA EN LA TABLA params_des
+echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: $SHELL --> Se procesa la ETAPA 1 con EXITO " 2>&1 &>> $VAL_LOG
+`mysql -N  <<<"update $TABLA set valor='2' where ENTIDAD = '${ENTIDAD}' and parametro = 'ETAPA';"`
+fi
 
-	if [ "$ETAPA" = "2" ]; then
-	###########################################################################################################################################################
-	echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: ETAPA 2: Envio de archivo CSV por MAIL " 2>&1 &>> $VAL_LOG
-	###########################################################################################################################################################
+if [ "$ETAPA" = "2" ]; then
+###########################################################################################################################################################
+echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: ETAPA 2: Envio de archivo CSV por MAIL " 2>&1 &>> $VAL_LOG
+###########################################################################################################################################################
+
+echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: Direccion de correo emisor  => " $VAL_CORREO_EMISOR 2>&1 &>> $VAL_LOG
+echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: Direcciones de correo receptores => " $VAL_CORREOS_RECEPTORES 2>&1 &>> $VAL_LOG
+
 	echo "Reporte:
 	$VAL_DIA_INI $VAL_HORA_INI"-"$VAL_DIA_FIN $VAL_HORA_FIN
 	" | mailx -s "${VAL_CORREO_ASUNTO}" \
@@ -335,14 +236,8 @@ $VAL_RUTA/python/carga_reporte_pedidos_canales.py \
 	echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: El MAIL con el archivo CSV se envia correctamente" 2>&1 &>> $VAL_LOG
 
 	#SE REALIZA EL SETEO DE LA ETAPA EN LA TABLA params_des
-		`mysql -N  <<<"update params_des set valor='1' where ENTIDAD = '${ENTIDAD}' and parametro = 'ETAPA';"`
-		`mysql -N  <<<"update params_des set valor='1' where ENTIDAD = '${ENTIDAD}' and parametro = 'EVENTO';"`
+		`mysql -N  <<<"update $TABLA set valor='1' where ENTIDAD = '${ENTIDAD}' and parametro = 'ETAPA';"`
+		`mysql -N  <<<"update $TABLA set valor=$VAL_SIG_EVENTO where ENTIDAD = '${ENTIDAD}' and parametro = 'EVENTO';"`
 		echo `date '+%Y-%m-%d %H:%M:%S'`" INFO: El proceso REPORTE_PEDIDOS_CANALES finaliza correctamente " 2>&1 &>> $VAL_LOG
-	fi
-
-    ;;
-	*)
-    echo `date '+%Y-%m-%d %H:%M:%S'`" ERROR: Evento no valido" 2>&1 &>> $VAL_LOG
-    ;;
-esac
+fi
 

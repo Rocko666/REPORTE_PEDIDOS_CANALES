@@ -297,3 +297,78 @@ GROUP BY wi.object_id,
     """.format(vDiaIni=vDiaIni, vDiaFin=vDiaFin, vHoraIni=vHoraIni,vHoraFin=vHoraFin)
     return qry
 
+## N02
+def dlt_otc_t_rep_pedidos_canales(vTFinal,vDiaFin,vHoraFin):
+    qry="""
+    SELECT 
+        work_item_id
+        ,created_when
+        ,type_
+        ,mo_type
+        ,movement_order_id
+        ,mo_status
+        ,customer_id
+        ,customer_name
+        ,contextid
+        ,so_type
+        ,equipment_condition
+        ,preactivation_template_id
+        ,preactivation_template_name
+        ,equipment_name
+        ,equipment_id
+        ,article
+        ,move_order_line_id
+        ,location_from_name
+        ,location_from_id
+        ,location_to_name
+        ,location_to_id
+        ,approved_quantity
+        ,reserved_quantity
+        ,dispatched_quantity
+        ,received_quantity
+        ,to_be_dispatched
+        ,fecha_ejecucion
+        ,corte
+    FROM  {vTFinal}
+    WHERE 
+        fecha_ejecucion NOT IN ({vDiaFin})
+        AND corte NOT IN ('{vHoraFin}') 
+    """.format(vTFinal=vTFinal, vDiaFin=vDiaFin, vHoraFin=vHoraFin)
+    return qry
+
+## N03
+def otc_t_rep_pedidos_cnls_tmp(vTTmp):
+    qry="""
+    SELECT 
+        work_item_id
+        ,created_when
+        ,type_
+        ,mo_type
+        ,movement_order_id
+        ,mo_status
+        ,customer_id
+        ,customer_name
+        ,contextid
+        ,so_type
+        ,equipment_condition
+        ,preactivation_template_id
+        ,preactivation_template_name
+        ,equipment_name
+        ,equipment_id
+        ,article
+        ,move_order_line_id
+        ,location_from_name
+        ,location_from_id
+        ,location_to_name
+        ,location_to_id
+        ,approved_quantity
+        ,reserved_quantity
+        ,dispatched_quantity
+        ,received_quantity
+        ,to_be_dispatched
+        ,fecha_ejecucion
+        ,corte
+    FROM  {vTTmp} 
+    """.format(vTTmp=vTTmp)
+    return qry
+
